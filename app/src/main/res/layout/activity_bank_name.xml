@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:minHeight="600dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏦"
+            android:textSize="72sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добро пожаловать!"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Введите название вашего банка"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/etBankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название банка"
+            style="@style/DarkEditText"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnConfirmBankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Продолжить"
+            style="@style/GoldButton"/>
+
+    </LinearLayout>
+</ScrollView>

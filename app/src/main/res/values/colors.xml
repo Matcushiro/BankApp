@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_bg">#0A0E1A</color>
+    <color name="dark_surface">#111827</color>
+    <color name="dark_card">#1C2333</color>
+    <color name="dark_card2">#1E2A3A</color>
+    <color name="accent_gold">#FFD700</color>
+    <color name="accent_gold_dark">#B8860B</color>
+    <color name="accent_blue">#4A90E2</color>
+    <color name="accent_green">#2ECC71</color>
+    <color name="accent_red">#E74C3C</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0BEC5</color>
+    <color name="text_hint">#607D8B</color>
+    <color name="divider">#263238</color>
+    <color name="transparent">#00000000</color>
+    <color name="overlay">#CC0A0E1A</color>
+    <color name="debit_color">#4A90E2</color>
+    <color name="credit_color">#E74C3C</color>
+    <color name="savings_color">#2ECC71</color>
+</resources>

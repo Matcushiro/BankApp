@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/dark_card"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Заголовок счёта -->
+        <TextView
+            android:id="@+id/tvAccTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Баланс -->
+        <TextView
+            android:id="@+id/tvAccBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Доп. информация о счёте -->
+        <TextView
+            android:id="@+id/tvAccInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.4"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
+
+        <!-- Кнопка открытия счёта (когда счёт не открыт) -->
+        <Button
+            android:id="@+id/btnAccOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Открыть счёт"
+            style="@style/GoldButton"
+            android:visibility="gone"/>
+
+        <!-- Кнопки операций (когда счёт открыт) -->
+        <LinearLayout
+            android:id="@+id/layoutAccButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnAccDeposit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Пополнить"
+                style="@style/GoldButton"
+                android:layout_marginEnd="6dp"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btnAccWithdraw"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Снять"
+                style="@style/OutlineButton"
+                android:layout_marginEnd="6dp"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btnAccHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="История"
+                style="@style/OutlineButton"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

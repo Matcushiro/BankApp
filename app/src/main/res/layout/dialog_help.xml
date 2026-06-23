@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/card_bg"
+    android:padding="24dp"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💡 Справка и советы"
+        android:textColor="@color/accent_gold"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.5"
+            android:text="📌 ФУНКЦИИ ПРИЛОЖЕНИЯ\n\n💳 Мои счета\nОткройте дебетовый, кредитный или накопительный счёт. Пополняйте, снимайте средства и просматривайте историю операций.\n\n↗️ Перевод\nПереводите деньги другим пользователям банка. Укажите их логин, выберите счета и сумму.\n\n👤 Профиль\nВся информация о вас: счета, балансы, даты, роль в системе, данные банка.\n\n👑 Администратор\nУправление пользователями, счетами, просмотр статистики банка.\n\n─────────────────\n\n💰 ВИДЫ СЧЕТОВ\n\n• Дебетовый — хранение и расходование личных средств. Без процентов, без лимита.\n\n• Кредитный — доступ к заёмным средствам. Лимит 50 000 ₽, ставка 15% годовых.\n\n• Накопительный — ваши сбережения. Ставка 8% в месяц. Проценты начисляются автоматически.\n\n─────────────────\n\n📚 СОВЕТЫ ПО ФИНАНСОВОЙ ГРАМОТНОСТИ\n\n1. Правило 50/30/20 — 50% дохода на нужды, 30% на желания, 20% на сбережения.\n\n2. Накопительный счёт — откройте его первым. Даже небольшие регулярные взносы создают капитал.\n\n3. Кредит с умом — берите только на нужды с чётким планом погашения.\n\n4. Подушка безопасности — держите 3–6 месячных бюджетов в резерве.\n\n5. Следите за расходами — проверяйте историю операций регулярно.\n\n6. Не держите все деньги в одном месте — диверсифицируйте между счетами."/>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnHelpClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Понятно!"
+        style="@style/GoldButton"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

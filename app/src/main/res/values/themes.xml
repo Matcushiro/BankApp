@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.BankApp" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/accent_gold</item>
+        <item name="colorPrimaryVariant">@color/accent_gold_dark</item>
+        <item name="colorOnPrimary">@color/dark_bg</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:windowBackground">@color/dark_bg</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+
+    <style name="DarkDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="colorSurface">@color/dark_card</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="colorPrimary">@color/accent_gold</item>
+    </style>
+</resources>

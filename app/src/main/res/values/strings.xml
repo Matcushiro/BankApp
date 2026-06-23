@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BankApp</string>
+    <string name="hint_username">Логин</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_fullname">ФИО</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Телефон</string>
+    <string name="btn_login">Войти</string>
+    <string name="btn_register">Зарегистрироваться</string>
+    <string name="go_register">Нет аккаунта? Зарегистрироваться</string>
+    <string name="go_login">Уже есть аккаунт? Войти</string>
+</resources>
