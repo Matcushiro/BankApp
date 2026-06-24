@@ -11,9 +11,26 @@
         <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
 
+    <!-- Стиль для тёмных диалогов (используется в некоторых местах) -->
     <style name="DarkDialog" parent="Theme.MaterialComponents.Dialog">
         <item name="colorSurface">@color/dark_card</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="colorPrimary">@color/accent_gold</item>
     </style>
+
+    <style name="DarkAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <!-- Тёмный фон диалога -->
+        <item name="android:windowBackground">@drawable/bg_dialog_dark</item>
+        <item name="colorSurface">@color/dark_card</item>
+        <!-- Белый цвет основного текста (заголовок, содержимое) -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <!-- Золотой цвет кнопок -->
+        <item name="colorPrimary">@color/accent_gold</item>
+        <item name="colorAccent">@color/accent_gold</item>
+        <!-- Белый текст в EditText -->
+        <item name="android:editTextColor">@color/text_primary</item>
+        <item name="editTextColor">@color/text_primary</item>
+    </style>
+
 </resources>

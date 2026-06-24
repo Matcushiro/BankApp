@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient">
 
+    <!-- Шапка -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,25 +42,301 @@
             android:textSize="13sp"/>
     </LinearLayout>
 
-    <TextView
+    <!-- ИЗМЕНЕНИЕ: Выпадающий список пользователей -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ℹ️ Управляйте пользователями: бан, назначение прав, управление счетами."
-        android:textColor="@color/text_secondary"
-        android:textSize="13sp"
-        android:paddingHorizontal="20dp"
-        android:paddingBottom="8dp"/>
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Выберите пользователя:"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Spinner обёрнут в карточку для красивого отображения -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/dark_card"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <Spinner
+                android:id="@+id/spinnerUsers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:popupBackground="@color/dark_surface"
+                android:background="@android:color/transparent"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <!-- ИЗМЕНЕНИЕ: Блок с информацией о выбранном пользователе -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/usersContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"/>
+            android:padding="16dp">
+
+            <!-- Карточка с данными пользователя -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/dark_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Имя -->
+                    <TextView
+                        android:id="@+id/tvUserDetailName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_gold"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Логин -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Логин: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailUsername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <!-- Email -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <!-- Телефон -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Телефон: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <!-- Роль -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Роль: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailRole"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <!-- Дата регистрации -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Рег.: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailRegDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <!-- Счета -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Счета: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailAccounts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <!-- Баланс -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="6dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Баланс: "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/tvUserDetailBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/accent_green"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <!-- Статус бана -->
+                    <TextView
+                        android:id="@+id/tvUserDetailBanned"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🚫 ЗАБАНЕН"
+                        android:textColor="@color/accent_red"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"
+                        android:visibility="gone"/>
+
+                    <!-- Разделитель -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginVertical="12dp"/>
+
+                    <!-- Кнопки управления -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnUserBan"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Забанить"
+                            style="@style/DangerButton"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="6dp"/>
+
+                        <Button
+                            android:id="@+id/btnUserAdmin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Сделать админом"
+                            style="@style/OutlineButton"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="6dp"/>
+
+                        <Button
+                            android:id="@+id/btnUserAccounts"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Счета"
+                            style="@style/GoldButton"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="6dp"/>
+
+                        <Button
+                            android:id="@+id/btnUserDelete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🗑"
+                            style="@style/DangerButton"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Подсказка когда пользователь не выбран -->
+            <TextView
+                android:id="@+id/tvNoUserSelected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ℹ️ Управляйте пользователями: бан, назначение, управление счетами."
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:padding="20dp"/>
+
+        </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

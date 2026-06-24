@@ -1,6 +1,7 @@
 package com.bankapp.activities;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +56,7 @@ public class AccountsActivity extends AppCompatActivity {
         authManager.refreshCurrentUser(this);
         currentUser = authManager.getCurrentUser();
 
-        // Проверяем начисление процентов по накопительному счёту
+        // Применяем начисление процентов по накопительному счёту
         bankManager.checkAndApplyInterest(currentUser);
 
         // Снова обновляем после возможного начисления процентов
@@ -124,87 +126,102 @@ public class AccountsActivity extends AppCompatActivity {
                             .append("\nДоступно к снятию: ")
                             .append(String.format("%.2f ₽", account.getAvailableCredit()))
                             .append("\nПроцентная ставка: ")
-                            .append((int)(account.getInterestRate() * 100)).append("% годовых")
-                            .append("\nОткрыт: ").append(DateUtils.formatDate(account.getCreatedDate()));
+                            .append(String.format("%.1f%%", account.getInterestRate()));
                     break;
 
                 case Account.TYPE_SAVINGS:
                     info.append("Процентная ставка: ")
-                            .append((int)(account.getInterestRate() * 100)).append("% в месяц")
-                            .append("\nСледующее начисление: ")
-                            .append(DateUtils.formatDate(account.getNextInterestDate()))
-                            .append("\nОсталось дней: ")
-                            .append(DateUtils.daysUntil(account.getNextInterestDate()))
-                            .append("\nОткрыт: ").append(DateUtils.formatDate(account.getCreatedDate()));
+                            .append(String.format("%.1f%% в год", account.getInterestRate()))
+                            .append("\nОткрыт: ")
+                            .append(DateUtils.formatDate(account.getCreatedDate()));
                     break;
             }
+            if (info.length() > 0) {
+                tvInfo.setText(info.toString());
+                tvInfo.setVisibility(View.VISIBLE);
+            }
 
-            tvInfo.setText(info.toString());
-            tvInfo.setVisibility(View.VISIBLE);
+            // ИЗМЕНЕНИЕ: Открываем диалог пополнения с правильными цветами
+            btnDeposit.setOnClickListener(v -> showDepositWithdrawDialog(account, true));
 
-            // Назначаем обработчики кнопок
-            btnDeposit.setOnClickListener(v ->
-                    showAmountDialog("Пополнение счёта", type, true));
+            // ИЗМЕНЕНИЕ: Открываем диалог снятия с правильными цветами
+            btnWithdraw.setOnClickListener(v -> showDepositWithdrawDialog(account, false));
 
-            btnWithdraw.setOnClickListener(v ->
-                    showAmountDialog("Снятие средств", type, false));
-
-            btnHistory.setOnClickListener(v ->
-                    showHistory(account));
+            // ИЗМЕНЕНИЕ: Открываем историю с правильными цветами
+            btnHistory.setOnClickListener(v -> showHistoryDialog(account));
         }
 
         container.addView(cardView);
     }
 
     /**
-     * Диалог ввода суммы для пополнения или снятия
+     * ИЗМЕНЕНИЕ: Диалог пополнения/снятия с явным указанием цветов текста.
+     * Проблема: стандартный AlertDialog наследует тёмный фон темы,
+     * но текст EditText мог быть тёмным (невидимым на тёмном фоне).
      */
-    private void showAmountDialog(String title, String accountType, boolean isDeposit) {
-        // Создаём поле ввода суммы
-        final EditText etAmount = new EditText(this);
+    private void showDepositWithdrawDialog(Account account, boolean isDeposit) {
+        String opTitle = isDeposit ? "💵 Пополнение счёта" : "📤 Снятие средств";
+
+        // Создаём EditText программно с явными цветами
+        EditText etAmount = new EditText(this);
         etAmount.setHint("Введите сумму");
-        etAmount.setInputType(android.text.InputType.TYPE_CLASS_NUMBER
-                | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        etAmount.setTextColor(getResources().getColor(R.color.text_primary, null));
-        etAmount.setHintTextColor(getResources().getColor(R.color.text_hint, null));
+        etAmount.setInputType(
+                android.text.InputType.TYPE_CLASS_NUMBER |
+                        android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+        );
+        // ИСПРАВЛЕНИЕ ЦВЕТА: белый текст и подсказка на тёмном фоне
+        etAmount.setTextColor(Color.WHITE);
+        etAmount.setHintTextColor(Color.parseColor("#B0BEC5"));
         etAmount.setBackgroundTintList(
-                android.content.res.ColorStateList.valueOf(
-                        getResources().getColor(R.color.accent_gold, null)));
+                android.content.res.ColorStateList.valueOf(Color.parseColor("#FFD700"))
+        );
 
-        int padding = (int)(16 * getResources().getDisplayMetrics().density);
-        etAmount.setPadding(padding, padding, padding, padding);
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        etAmount.setPadding(pad, pad / 2, pad, pad / 2);
 
-        // Оборачиваем в LinearLayout для отступов
         LinearLayout container = new LinearLayout(this);
         container.setOrientation(LinearLayout.VERTICAL);
-        int margin = (int)(20 * getResources().getDisplayMetrics().density);
-        container.setPadding(margin, margin / 2, margin, 0);
+        container.setPadding(pad * 2, pad, pad * 2, 0);
         container.addView(etAmount);
 
-        new AlertDialog.Builder(this, R.style.DarkDialog)
-                .setTitle(title)
+        new AlertDialog.Builder(this, R.style.DarkAlertDialog)
+                .setTitle(opTitle)
                 .setView(container)
-                .setPositiveButton("Подтвердить", (dialog, which) -> {
+                .setPositiveButton(isDeposit ? "Пополнить" : "Снять", (d, w) -> {
                     String input = etAmount.getText().toString().trim();
                     if (input.isEmpty()) {
                         Toast.makeText(this, "Введите сумму", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    double amount;
                     try {
-                        double amount = Double.parseDouble(input);
-                        if (amount <= 0) {
-                            Toast.makeText(this, "Сумма должна быть больше нуля", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        BankManager.OperationResult result;
-                        if (isDeposit) {
-                            result = bankManager.deposit(currentUser, accountType, amount);
-                        } else {
-                            result = bankManager.withdraw(currentUser, accountType, amount);
-                        }
-                        handleOperationResult(result);
+                        amount = Double.parseDouble(input);
                     } catch (NumberFormatException e) {
-                        Toast.makeText(this, "Введите корректную сумму", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Неверный формат суммы", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (amount <= 0) {
+                        Toast.makeText(this, "Сумма должна быть больше нуля", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    boolean success;
+                    if (isDeposit) {
+                        success = bankManager.deposit(currentUser, account, amount);
+                    } else {
+                        success = bankManager.withdraw(currentUser, account, amount);
+                    }
+
+                    if (success) {
+                        Toast.makeText(this,
+                                isDeposit ? "Пополнено на " + amount + " ₽"
+                                        : "Снято " + amount + " ₽",
+                                Toast.LENGTH_SHORT).show();
+                        refresh();
+                    } else {
+                        Toast.makeText(this,
+                                isDeposit ? "Ошибка пополнения" : "Недостаточно средств",
+                                Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Отмена", null)
@@ -212,69 +229,125 @@ public class AccountsActivity extends AppCompatActivity {
     }
 
     /**
-     * Диалог истории операций по счёту
+     * ИЗМЕНЕНИЕ: Диалог истории операций с явным светлым текстом на тёмном фоне.
+     * Каждая операция отображается с чётким контрастом.
      */
-    private void showHistory(Account account) {
+    private void showHistoryDialog(Account account) {
         List<Transaction> transactions = account.getTransactions();
 
+        // Создаём ScrollView с LinearLayout внутри
+        ScrollView scrollView = new ScrollView(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        layout.setPadding(pad, pad / 2, pad, pad / 2);
+
         if (transactions == null || transactions.isEmpty()) {
-            new AlertDialog.Builder(this, R.style.DarkDialog)
-                    .setTitle("История операций")
-                    .setMessage("История операций пуста.\nВыполните первую операцию!")
-                    .setPositiveButton("Закрыть", null)
-                    .show();
-            return;
+            TextView tvEmpty = new TextView(this);
+            tvEmpty.setText("История операций пуста");
+            // ИСПРАВЛЕНИЕ ЦВЕТА: белый текст
+            tvEmpty.setTextColor(Color.parseColor("#B0BEC5"));
+            tvEmpty.setTextSize(14);
+            tvEmpty.setPadding(pad, pad, pad, pad);
+            layout.addView(tvEmpty);
+        } else {
+            // Показываем последние 20 операций (от новых к старым)
+            List<Transaction> txList = transactions;
+            int start = Math.max(0, txList.size() - 20);
+            for (int i = txList.size() - 1; i >= start; i--) {
+                Transaction tx = txList.get(i);
+
+                // Внешний контейнер для одной операции
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.VERTICAL);
+                row.setPadding(0, pad / 2, 0, pad / 2);
+
+                // Разделитель между операциями (кроме первой)
+                if (i < txList.size() - 1) {
+                    View divider = new View(this);
+                    divider.setBackgroundColor(Color.parseColor("#26323800"));
+                    LinearLayout.LayoutParams dividerParams =
+                            new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                    divider.setLayoutParams(dividerParams);
+                    layout.addView(divider);
+                }
+
+                // Тип операции + сумма
+                LinearLayout topRow = new LinearLayout(this);
+                topRow.setOrientation(LinearLayout.HORIZONTAL);
+
+                TextView tvType = new TextView(this);
+                tvType.setLayoutParams(new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                tvType.setText(getTransactionTypeLabel(tx.getType()));
+                // ИСПРАВЛЕНИЕ ЦВЕТА: явный белый цвет
+                tvType.setTextColor(Color.WHITE);
+                tvType.setTextSize(14);
+                tvType.setTypeface(null, android.graphics.Typeface.BOLD);
+
+                TextView tvAmount = new TextView(this);
+                double amt = tx.getAmount();
+                // ИСПРАВЛЕНИЕ ЦВЕТА: зелёный для пополнения, красный для снятия
+                if (isPositiveTransaction(tx.getType())) {
+                    tvAmount.setTextColor(Color.parseColor("#2ECC71")); // зелёный
+                    tvAmount.setText(String.format("+%.2f ₽", amt));
+                } else {
+                    tvAmount.setTextColor(Color.parseColor("#E74C3C")); // красный
+                    tvAmount.setText(String.format("-%.2f ₽", amt));
+                }
+                tvAmount.setTextSize(14);
+                tvAmount.setTypeface(null, android.graphics.Typeface.BOLD);
+
+                topRow.addView(tvType);
+                topRow.addView(tvAmount);
+                row.addView(topRow);
+
+                // Описание операции
+                if (tx.getDescription() != null && !tx.getDescription().isEmpty()) {
+                    TextView tvDesc = new TextView(this);
+                    tvDesc.setText(tx.getDescription());
+                    // ИСПРАВЛЕНИЕ ЦВЕТА: светло-серый для описания
+                    tvDesc.setTextColor(Color.parseColor("#B0BEC5"));
+                    tvDesc.setTextSize(12);
+                    row.addView(tvDesc);
+                }
+
+                // Дата
+                TextView tvDate = new TextView(this);
+                tvDate.setText(DateUtils.formatDate(tx.getDate()));
+                // ИСПРАВЛЕНИЕ ЦВЕТА: серый для даты
+                tvDate.setTextColor(Color.parseColor("#607D8B"));
+                tvDate.setTextSize(11);
+                row.addView(tvDate);
+
+                layout.addView(row);
+            }
         }
 
-        StringBuilder sb = new StringBuilder();
-        // Показываем от новых к старым
-        for (int i = transactions.size() - 1; i >= 0; i--) {
-            Transaction tx = transactions.get(i);
-            String sign = tx.getType().equals(Transaction.TYPE_DEPOSIT)
-                    || (tx.getType().equals(Transaction.TYPE_TRANSFER)
-                    && tx.getToAccountId() != null
-                    && tx.getToAccountId().equals(account.getId()))
-                    || tx.getType().equals(Transaction.TYPE_INTEREST)
-                    ? "+" : "-";
+        scrollView.addView(layout);
 
-            sb.append(DateUtils.formatDateTime(tx.getDate())).append("\n")
-                    .append(tx.getTypeDisplayName()).append(": ")
-                    .append(sign).append(String.format("%.2f ₽", tx.getAmount())).append("\n")
-                    .append(tx.getDescription()).append("\n")
-                    .append("─────────────────\n");
-        }
-
-        new AlertDialog.Builder(this, R.style.DarkDialog)
-                .setTitle("История: " + account.getTypeDisplayName())
-                .setMessage(sb.toString())
+        new AlertDialog.Builder(this, R.style.DarkAlertDialog)
+                .setTitle("📋 История операций")
+                .setView(scrollView)
                 .setPositiveButton("Закрыть", null)
                 .show();
     }
 
-    /**
-     * Обработка результата банковской операции
-     */
-    private void handleOperationResult(BankManager.OperationResult result) {
-        switch (result) {
-            case SUCCESS:
-                Toast.makeText(this, "✅ Операция выполнена успешно!", Toast.LENGTH_SHORT).show();
-                refresh(); // Обновляем отображение после операции
-                break;
-            case INSUFFICIENT_FUNDS:
-                Toast.makeText(this, "❌ Недостаточно средств на счёте", Toast.LENGTH_LONG).show();
-                break;
-            case INVALID_AMOUNT:
-                Toast.makeText(this, "❌ Некорректная сумма", Toast.LENGTH_SHORT).show();
-                break;
-            case ACCOUNT_NOT_FOUND:
-                Toast.makeText(this, "❌ Счёт не найден", Toast.LENGTH_SHORT).show();
-                break;
-            case ACCOUNT_INACTIVE:
-                Toast.makeText(this, "❌ Счёт неактивен", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                Toast.makeText(this, "❌ Произошла ошибка", Toast.LENGTH_SHORT).show();
-                break;
+    private String getTransactionTypeLabel(String type) {
+        if (type == null) return "Операция";
+        switch (type) {
+            case Transaction.TYPE_DEPOSIT:    return "📥 Пополнение";
+            case Transaction.TYPE_WITHDRAW: return "📤 Снятие";
+            case Transaction.TYPE_TRANSFER:   return "↔️ Перевод";
+            case Transaction.TYPE_INTEREST:   return "📈 Проценты";
+            default:                          return type;
         }
+    }
+
+    private boolean isPositiveTransaction(String type) {
+        return Transaction.TYPE_DEPOSIT.equals(type)
+                || Transaction.TYPE_INTEREST.equals(type);
     }
 }

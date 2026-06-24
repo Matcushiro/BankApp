@@ -16,11 +16,9 @@ public class AuthManager {
 
     private AuthManager(Context context) {
         dataManager = DataManager.getInstance(context);
-        // Восстанавливаем сессию при запуске
-        String uid = dataManager.getCurrentUserId();
-        if (uid != null) {
-            currentUser = dataManager.getUserById(uid);
-        }
+        // ИЗМЕНЕНИЕ: НЕ восстанавливаем сессию из SharedPreferences при создании.
+        // Сессия сбрасывается при каждом запуске через SplashActivity.logout().
+        currentUser = null;
     }
 
     public static synchronized AuthManager getInstance(Context context) {
@@ -30,9 +28,9 @@ public class AuthManager {
         return instance;
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Хэширование пароля SHA-256
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -46,9 +44,9 @@ public class AuthManager {
         }
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Вход в систему
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public enum LoginResult {
         SUCCESS,
         INVALID_CREDENTIALS,
@@ -91,9 +89,9 @@ public class AuthManager {
         return LoginResult.SUCCESS;
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Регистрация
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public enum RegisterResult {
         SUCCESS,
         USERNAME_TAKEN,
@@ -126,36 +124,31 @@ public class AuthManager {
         return RegisterResult.SUCCESS;
     }
 
-    // ─────────────────────────────────────────────────────────
-    // Выход
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
+    // Выход / текущий пользователь
+    // ────────────────────────────────────────────────────────────────────────
+
+    /** ИЗМЕНЕНИЕ: сбрасываем currentUser и удаляем сохранённый userId из хранилища */
     public void logout() {
         currentUser = null;
-        dataManager.clearSession();
-    }
-
-    // ─────────────────────────────────────────────────────────
-    // Получение текущего пользователя
-    // ─────────────────────────────────────────────────────────
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    /**
-     * Обновляет currentUser из хранилища.
-     * Вызывать после любой операции изменяющей данные пользователя.
-     */
-    public void refreshCurrentUser(Context context) {
-        if (currentUser != null) {
-            User fresh = DataManager.getInstance(context)
-                    .getUserById(currentUser.getId());
-            if (fresh != null) {
-                currentUser = fresh;
-            }
-        }
+        dataManager.saveCurrentUserId(null);
     }
 
     public boolean isLoggedIn() {
         return currentUser != null;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    /** Обновляет currentUser из хранилища (если пользователь уже вошёл) */
+    public void refreshCurrentUser(Context context) {
+        if (currentUser == null) return;
+        String uid = dataManager.getCurrentUserId();
+        if (uid != null) {
+            User refreshed = dataManager.getUserById(uid);
+            if (refreshed != null) currentUser = refreshed;
+        }
     }
 }

@@ -37,9 +37,9 @@ public class DataManager {
         return instance;
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Загрузка данных из SharedPreferences
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     private void loadData() {
         String bankJson  = prefs.getString(Constants.KEY_BANK_DATA, null);
         String usersJson = prefs.getString(Constants.KEY_USERS_DATA, null);
@@ -54,9 +54,9 @@ public class DataManager {
         if (users == null) users = new ArrayList<>();
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Сохранение всех данных
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public void saveAll() {
         prefs.edit()
                 .putString(Constants.KEY_BANK_DATA,  gson.toJson(bank))
@@ -64,9 +64,9 @@ public class DataManager {
                 .apply();
     }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Банк
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public Bank getBank() { return bank; }
 
     public void setBank(Bank bank) {
@@ -76,9 +76,9 @@ public class DataManager {
 
     public boolean isBankInitialized() { return bank != null; }
 
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     // Пользователи
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────
     public List<User> getAllUsers() { return users; }
 
     public User getUserById(String id) {
@@ -104,7 +104,7 @@ public class DataManager {
 
     /**
      * Обновляет пользователя в списке и сразу сохраняет в SharedPreferences.
-     * Ключевой метод — все изменения баланса/счетов проходят через него.
+     * Ключевой метод — все изменения баланса/счетов хранятся здесь.
      */
     public void updateUser(User updated) {
         boolean found = false;
@@ -116,7 +116,7 @@ public class DataManager {
             }
         }
         if (!found) {
-            // Если пользователя не было — добавляем
+            // Если пользователя не было в списке — добавляем
             users.add(updated);
         }
         // Немедленно сохраняем на диск
@@ -128,58 +128,23 @@ public class DataManager {
         saveAll();
     }
 
-    // ─────────────────────────────────────────────────────────
-    // Счета
-    // ─────────────────────────────────────────────────────────
-    public Account findAccountById(String accountId) {
-        if (accountId == null) return null;
-        for (User u : users) {
-            for (Account a : u.getAccounts()) {
-                if (a.getId().equals(accountId)) return a;
-            }
-        }
-        return null;
-    }
-
-    public User findUserByAccountId(String accountId) {
-        if (accountId == null) return null;
-        for (User u : users) {
-            for (Account a : u.getAccounts()) {
-                if (a.getId().equals(accountId)) return u;
-            }
-        }
-        return null;
-    }
-
-    // ─────────────────────────────────────────────────────────
-    // Статистика банка
-    // ─────────────────────────────────────────────────────────
-    public double getTotalBankBalance() {
-        double total = 0;
-        for (User u : users)
-            for (Account a : u.getAccounts())
-                total += a.getBalance();
-        return total;
-    }
-
-    public int getTotalAccountsCount() {
-        int count = 0;
-        for (User u : users) count += u.getAccounts().size();
-        return count;
-    }
-
-    // ─────────────────────────────────────────────────────────
-    // Сессия текущего пользователя
-    // ─────────────────────────────────────────────────────────
-    public void saveCurrentUserId(String userId) {
-        prefs.edit().putString(Constants.KEY_CURRENT_USER, userId).apply();
-    }
-
+    // ────────────────────────────────────────────────────────────────────────
+    // Текущая сессия
+    // ────────────────────────────────────────────────────────────────────────
     public String getCurrentUserId() {
         return prefs.getString(Constants.KEY_CURRENT_USER, null);
     }
 
-    public void clearSession() {
-        prefs.edit().remove(Constants.KEY_CURRENT_USER).apply();
+    /**
+     * ИЗМЕНЕНИЕ: Поддержка null — при logout() передаём null, чтобы очистить сессию.
+     */
+    public void saveCurrentUserId(String userId) {
+        SharedPreferences.Editor editor = prefs.edit();
+        if (userId == null) {
+            editor.remove(Constants.KEY_CURRENT_USER);
+        } else {
+            editor.putString(Constants.KEY_CURRENT_USER, userId);
+        }
+        editor.apply();
     }
 }

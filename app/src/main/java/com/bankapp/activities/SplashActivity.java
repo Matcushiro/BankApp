@@ -31,14 +31,14 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             DataManager dm = DataManager.getInstance(this);
-            AuthManager am = AuthManager.getInstance(this);
+            // ИЗМЕНЕНИЕ: Выходим из сессии при каждом запуске приложения
+            AuthManager.getInstance(this).logout();
 
             Intent intent;
             if (!dm.isBankInitialized()) {
                 intent = new Intent(this, BankNameActivity.class);
-            } else if (am.isLoggedIn()) {
-                intent = new Intent(this, MainActivity.class);
             } else {
+                // Всегда требуем повторного входа при запуске
                 intent = new Intent(this, AuthActivity.class);
             }
             startActivity(intent);
