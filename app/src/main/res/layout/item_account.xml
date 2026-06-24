@@ -90,6 +90,7 @@
                 android:layout_weight="1"
                 android:text="История"
                 style="@style/OutlineButton"
+                android:layout_marginEnd="6dp"
                 android:textSize="12sp"/>
         </LinearLayout>
 
