@@ -39,21 +39,21 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnUserBan"
-                style="@style/DangerButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Забанить"
-                android:textSize="12sp" />
-
-            <Button
                 android:id="@+id/btnUserAdmin"
                 style="@style/OutlineButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Сделать админом"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnUserBan"
+                style="@style/GoldButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Забанить"
                 android:textSize="12sp" />
 
             <Button
@@ -67,11 +67,11 @@
 
             <Button
                 android:id="@+id/btnUserDelete"
-                style="@style/DangerButton"
+                style="@style/GoldButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="🗑"
-                android:textSize="16sp" />
+                android:text="Удалить"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

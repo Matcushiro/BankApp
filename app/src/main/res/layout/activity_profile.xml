@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🏦 Информация о банке"
+                        android:text="Информация о банке"
                         android:textColor="@color/accent_gold"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="👤 Личные данные"
+                        android:text="Личные данные"
                         android:textColor="@color/accent_gold"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -182,7 +182,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="💰 Мои счета"
+                        android:text="Мои счета"
                         android:textColor="@color/accent_gold"
                         android:textSize="16sp"
                         android:textStyle="bold"

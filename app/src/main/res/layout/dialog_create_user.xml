@@ -9,7 +9,7 @@
         android:id="@+id/etCreateFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ФИО *"
+        android:hint="ФИО"
         style="@style/DarkEditText"
         android:inputType="textPersonName"
         android:layout_marginBottom="12dp"/>
@@ -18,7 +18,7 @@
         android:id="@+id/etCreateUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Логин *"
+        android:hint="Логин"
         style="@style/DarkEditText"
         android:inputType="text"
         android:layout_marginBottom="12dp"/>
@@ -27,7 +27,7 @@
         android:id="@+id/etCreatePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Пароль *"
+        android:hint="Пароль"
         style="@style/DarkEditText"
         android:inputType="textPassword"
         android:layout_marginBottom="12dp"/>

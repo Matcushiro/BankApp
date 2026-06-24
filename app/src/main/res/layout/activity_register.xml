@@ -32,7 +32,7 @@
             android:id="@+id/etRegFullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ФИО *"
+            android:hint="ФИО"
             style="@style/DarkEditText"
             android:inputType="textPersonName"
             android:layout_marginBottom="16dp"/>
@@ -41,7 +41,7 @@
             android:id="@+id/etRegUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Логин * (мин. 3 символа)"
+            android:hint="Логин (мин. 3 символа)"
             style="@style/DarkEditText"
             android:inputType="text"
             android:layout_marginBottom="16dp"/>
@@ -50,7 +50,7 @@
             android:id="@+id/etRegPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Пароль * (мин. 6 символов)"
+            android:hint="Пароль (мин. 6 символов)"
             style="@style/DarkEditText"
             android:inputType="textPassword"
             android:layout_marginBottom="16dp"/>
@@ -85,10 +85,10 @@
             android:id="@+id/tvGoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:text="Уже есть аккаунт? Войти"
             android:textColor="@color/accent_gold"
-            android:textSize="15sp"
-            android:padding="8dp"/>
+            android:textSize="15sp" />
 
     </LinearLayout>
 </ScrollView>
