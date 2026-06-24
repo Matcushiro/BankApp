@@ -37,9 +37,7 @@ public class DataManager {
         return instance;
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Загрузка данных из SharedPreferences
-    // ────────────────────────────────────────────────────────────────────────
     private void loadData() {
         String bankJson  = prefs.getString(Constants.KEY_BANK_DATA, null);
         String usersJson = prefs.getString(Constants.KEY_USERS_DATA, null);
@@ -54,9 +52,7 @@ public class DataManager {
         if (users == null) users = new ArrayList<>();
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Сохранение всех данных
-    // ────────────────────────────────────────────────────────────────────────
     public void saveAll() {
         prefs.edit()
                 .putString(Constants.KEY_BANK_DATA,  gson.toJson(bank))
@@ -64,9 +60,7 @@ public class DataManager {
                 .apply();
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Банк
-    // ────────────────────────────────────────────────────────────────────────
     public Bank getBank() { return bank; }
 
     public void setBank(Bank bank) {
@@ -76,9 +70,7 @@ public class DataManager {
 
     public boolean isBankInitialized() { return bank != null; }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Пользователи
-    // ────────────────────────────────────────────────────────────────────────
     public List<User> getAllUsers() { return users; }
 
     public User getUserById(String id) {
@@ -102,10 +94,6 @@ public class DataManager {
         saveAll();
     }
 
-    /**
-     * Обновляет пользователя в списке и сразу сохраняет в SharedPreferences.
-     * Ключевой метод — все изменения баланса/счетов хранятся здесь.
-     */
     public void updateUser(User updated) {
         boolean found = false;
         for (int i = 0; i < users.size(); i++) {
@@ -128,16 +116,11 @@ public class DataManager {
         saveAll();
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Текущая сессия
-    // ────────────────────────────────────────────────────────────────────────
     public String getCurrentUserId() {
         return prefs.getString(Constants.KEY_CURRENT_USER, null);
     }
 
-    /**
-     * ИЗМЕНЕНИЕ: Поддержка null — при logout() передаём null, чтобы очистить сессию.
-     */
     public void saveCurrentUserId(String userId) {
         SharedPreferences.Editor editor = prefs.edit();
         if (userId == null) {

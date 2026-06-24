@@ -31,9 +31,7 @@ public class BankManager {
         ACCOUNT_INACTIVE
     }
 
-    // ─────────────────────────────────────────────────────────
     // Открытие счёта
-    // ─────────────────────────────────────────────────────────
     public boolean openAccount(User user, String type) {
         // Нельзя открыть два счёта одного типа
         if (user.hasAccountOfType(type)) return false;
@@ -45,9 +43,7 @@ public class BankManager {
         return true;
     }
 
-    // ─────────────────────────────────────────────────────────
     // Пополнение счёта
-    // ─────────────────────────────────────────────────────────
     public OperationResult deposit(User user, String accountType, double amount) {
         if (amount <= 0) return OperationResult.INVALID_AMOUNT;
 
@@ -82,9 +78,7 @@ public class BankManager {
         return OperationResult.SUCCESS;
     }
 
-    // ─────────────────────────────────────────────────────────
     // Снятие средств
-    // ─────────────────────────────────────────────────────────
     public OperationResult withdraw(User user, String accountType, double amount) {
         if (amount <= 0) return OperationResult.INVALID_AMOUNT;
 
@@ -129,9 +123,7 @@ public class BankManager {
         return OperationResult.SUCCESS;
     }
 
-    // ─────────────────────────────────────────────────────────
     // Перевод между пользователями
-    // ─────────────────────────────────────────────────────────
     public OperationResult transfer(User fromUser, String fromType,
                                     String toUsername, String toType,
                                     double amount) {
@@ -192,9 +184,7 @@ public class BankManager {
         return OperationResult.SUCCESS;
     }
 
-    // ─────────────────────────────────────────────────────────
     // Начисление процентов по накопительному счёту
-    // ─────────────────────────────────────────────────────────
     public void checkAndApplyInterest(User user) {
         if (user == null) return;
 
@@ -231,9 +221,7 @@ public class BankManager {
         }
     }
 
-    // ─────────────────────────────────────────────────────────
     // Вспомогательный метод: синхронизация данных пользователя
-    // ─────────────────────────────────────────────────────────
     private void syncUser(User target, User source) {
         target.setAccounts(source.getAccounts());
         target.setAdmin(source.isAdmin());

@@ -35,7 +35,7 @@ public class AdminUsersActivity extends AppCompatActivity {
     private AuthManager authManager;
     private User currentAdmin;
 
-    // ИЗМЕНЕНИЕ: UI элементы для Spinner-подхода
+    //UI элементы для Spinner-подхода
     private Spinner spinnerUsers;
     private CardView cardUserInfo;
     private TextView tvNoUserSelected;
@@ -71,7 +71,6 @@ public class AdminUsersActivity extends AppCompatActivity {
         ImageButton btnBack = findViewById(R.id.btnAdminUsersBack);
         Button btnCreateUser = findViewById(R.id.btnCreateUser);
 
-        // ИЗМЕНЕНИЕ: Spinner и блок информации
         spinnerUsers      = findViewById(R.id.spinnerUsers);
         cardUserInfo      = findViewById(R.id.cardUserInfo);
         tvNoUserSelected  = findViewById(R.id.tvNoUserSelected);
@@ -105,10 +104,6 @@ public class AdminUsersActivity extends AppCompatActivity {
         loadUsersToSpinner();
     }
 
-    /**
-     * ИЗМЕНЕНИЕ: Заполняем Spinner списком пользователей.
-     * При выборе элемента — показываем информацию о нём.
-     */
     private void loadUsersToSpinner() {
         List<User> allUsers = dataManager.getAllUsers();
         userList.clear();
@@ -174,9 +169,6 @@ public class AdminUsersActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * ИЗМЕНЕНИЕ: Показываем подробную информацию о выбранном пользователе в карточке.
-     */
     private void showUserDetails(User user) {
         cardUserInfo.setVisibility(View.VISIBLE);
         tvNoUserSelected.setVisibility(View.GONE);

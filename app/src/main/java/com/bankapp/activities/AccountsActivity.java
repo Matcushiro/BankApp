@@ -138,24 +138,16 @@ public class AccountsActivity extends AppCompatActivity {
                 tvInfo.setVisibility(View.VISIBLE);
             }
 
-            // ИЗМЕНЕНИЕ: Открываем диалог пополнения с правильными цветами
             btnDeposit.setOnClickListener(v -> showDepositWithdrawDialog(account, true));
 
-            // ИЗМЕНЕНИЕ: Открываем диалог снятия с правильными цветами
             btnWithdraw.setOnClickListener(v -> showDepositWithdrawDialog(account, false));
 
-            // ИЗМЕНЕНИЕ: Открываем историю с правильными цветами
             btnHistory.setOnClickListener(v -> showHistoryDialog(account));
         }
 
         container.addView(cardView);
     }
 
-    /**
-     * ИЗМЕНЕНИЕ: Диалог пополнения/снятия с явным указанием цветов текста.
-     * Проблема: стандартный AlertDialog наследует тёмный фон темы,
-     * но текст EditText мог быть тёмным (невидимым на тёмном фоне).
-     */
     private void showDepositWithdrawDialog(Account account, boolean isDeposit) {
         String opTitle = isDeposit ? "💵 Пополнение счёта" : "📤 Снятие средств";
 
@@ -167,7 +159,6 @@ public class AccountsActivity extends AppCompatActivity {
                         android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
         );
 
-        // ИСПРАВЛЕНИЕ ЦВЕТА: белый текст и подсказка на тёмном фоне
         etAmount.setTextColor(Color.WHITE);
         etAmount.setHintTextColor(Color.parseColor("#B0BEC5"));
         etAmount.setBackgroundTintList(
@@ -205,7 +196,6 @@ public class AccountsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // ИСПРАВЛЕНИЕ: Используем OperationResult вместо boolean
                     BankManager.OperationResult result;
                     if (isDeposit) {
                         result = bankManager.deposit(currentUser, account.getType(), amount);
@@ -213,7 +203,6 @@ public class AccountsActivity extends AppCompatActivity {
                         result = bankManager.withdraw(currentUser, account.getType(), amount);
                     }
 
-                    // ИСПРАВЛЕНИЕ: Обрабатываем все возможные результаты
                     switch (result) {
                         case SUCCESS:
                             Toast.makeText(this,
@@ -256,7 +245,7 @@ public class AccountsActivity extends AppCompatActivity {
         if (transactions == null || transactions.isEmpty()) {
             TextView tvEmpty = new TextView(this);
             tvEmpty.setText("История операций пуста");
-            // ИСПРАВЛЕНИЕ ЦВЕТА: белый текст
+
             tvEmpty.setTextColor(Color.parseColor("#B0BEC5"));
             tvEmpty.setTextSize(14);
             tvEmpty.setPadding(pad, pad, pad, pad);
@@ -292,7 +281,6 @@ public class AccountsActivity extends AppCompatActivity {
                 tvType.setLayoutParams(new LinearLayout.LayoutParams(
                         0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
                 tvType.setText(getTransactionTypeLabel(tx.getType()));
-                // ИСПРАВЛЕНИЕ ЦВЕТА: явный белый цвет
                 tvType.setTextColor(Color.WHITE);
                 tvType.setTextSize(14);
                 tvType.setTypeface(null, android.graphics.Typeface.BOLD);
@@ -318,7 +306,6 @@ public class AccountsActivity extends AppCompatActivity {
                 if (tx.getDescription() != null && !tx.getDescription().isEmpty()) {
                     TextView tvDesc = new TextView(this);
                     tvDesc.setText(tx.getDescription());
-                    // ИСПРАВЛЕНИЕ ЦВЕТА: светло-серый для описания
                     tvDesc.setTextColor(Color.parseColor("#B0BEC5"));
                     tvDesc.setTextSize(12);
                     row.addView(tvDesc);
@@ -327,7 +314,6 @@ public class AccountsActivity extends AppCompatActivity {
                 // Дата
                 TextView tvDate = new TextView(this);
                 tvDate.setText(DateUtils.formatDate(tx.getDate()));
-                // ИСПРАВЛЕНИЕ ЦВЕТА: серый для даты
                 tvDate.setTextColor(Color.parseColor("#607D8B"));
                 tvDate.setTextSize(11);
                 row.addView(tvDate);

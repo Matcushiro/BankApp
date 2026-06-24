@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             DataManager dm = DataManager.getInstance(this);
-            // ИЗМЕНЕНИЕ: Выходим из сессии при каждом запуске приложения
+            // Выходим из сессии при каждом запуске приложения
             AuthManager.getInstance(this).logout();
 
             Intent intent;

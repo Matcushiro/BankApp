@@ -28,9 +28,7 @@ public class AuthManager {
         return instance;
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Хэширование пароля SHA-256
-    // ────────────────────────────────────────────────────────────────────────
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -44,9 +42,7 @@ public class AuthManager {
         }
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Вход в систему
-    // ────────────────────────────────────────────────────────────────────────
     public enum LoginResult {
         SUCCESS,
         INVALID_CREDENTIALS,
@@ -89,9 +85,7 @@ public class AuthManager {
         return LoginResult.SUCCESS;
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Регистрация
-    // ────────────────────────────────────────────────────────────────────────
     public enum RegisterResult {
         SUCCESS,
         USERNAME_TAKEN,
@@ -124,11 +118,7 @@ public class AuthManager {
         return RegisterResult.SUCCESS;
     }
 
-    // ────────────────────────────────────────────────────────────────────────
     // Выход / текущий пользователь
-    // ────────────────────────────────────────────────────────────────────────
-
-    /** ИЗМЕНЕНИЕ: сбрасываем currentUser и удаляем сохранённый userId из хранилища */
     public void logout() {
         currentUser = null;
         dataManager.saveCurrentUserId(null);
@@ -142,7 +132,6 @@ public class AuthManager {
         return currentUser;
     }
 
-    /** Обновляет currentUser из хранилища (если пользователь уже вошёл) */
     public void refreshCurrentUser(Context context) {
         if (currentUser == null) return;
         String uid = dataManager.getCurrentUserId();
