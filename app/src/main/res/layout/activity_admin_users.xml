@@ -6,12 +6,15 @@
     android:orientation="vertical"
     android:background="@drawable/bg_gradient">
 
-    <!-- Шапка -->
+    <!-- ═══ Toolbar ══════════════════════════════════════════════════════ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:gravity="center_vertical">
 
         <ImageButton
@@ -21,7 +24,7 @@
             android:src="@android:drawable/ic_media_previous"
             android:background="@drawable/btn_back"
             android:tint="@color/accent_gold"
-            android:contentDescription="Back"/>
+            android:contentDescription="Назад"/>
 
         <TextView
             android:layout_width="0dp"
@@ -31,7 +34,9 @@
             android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <Button
             android:id="@+id/btnCreateUser"
@@ -39,16 +44,17 @@
             android:layout_height="wrap_content"
             android:text="+ Создать"
             style="@style/GoldButton"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:paddingHorizontal="14dp"/>
     </LinearLayout>
 
-    <!-- ИЗМЕНЕНИЕ: Выпадающий список пользователей -->
+    <!-- ═══ Spinner ══════════════════════════════════════════════════════ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp">
+        android:paddingBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +64,6 @@
             android:textSize="13sp"
             android:layout_marginBottom="6dp"/>
 
-        <!-- Spinner обёрнут в карточку для красивого отображения -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,11 +81,12 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <!-- ИЗМЕНЕНИЕ: Блок с информацией о выбранном пользователе -->
+    <!-- ═══ User Details ══════════════════════════════════════════════════ -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +94,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Карточка с данными пользователя -->
+            <!-- Карточка с данными выбранного пользователя -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardUserInfo"
                 android:layout_width="match_parent"
@@ -105,7 +111,7 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Имя -->
+                    <!-- Имя пользователя -->
                     <TextView
                         android:id="@+id/tvUserDetailName"
                         android:layout_width="match_parent"
@@ -113,24 +119,27 @@
                         android:textColor="@color/accent_gold"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="12dp"/>
+                        android:layout_marginBottom="14dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
 
                     <!-- Логин -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Логин: "
+                            android:text="Логин:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailUsername"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:textStyle="bold"/>
@@ -141,17 +150,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Email: "
+                            android:text="Email:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailEmail"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"/>
                     </LinearLayout>
@@ -161,17 +171,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Телефон: "
+                            android:text="Телефон:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailPhone"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"/>
                     </LinearLayout>
@@ -181,17 +192,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Роль: "
+                            android:text="Роль:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailRole"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:textStyle="bold"/>
@@ -202,17 +214,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Рег.: "
+                            android:text="Рег.:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailRegDate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"/>
                     </LinearLayout>
@@ -222,17 +235,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Счета: "
+                            android:text="Счета:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailAccounts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp"/>
                     </LinearLayout>
@@ -242,17 +256,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="6dp">
+                        android:layout_marginBottom="8dp">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Баланс: "
+                            android:text="Баланс:"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/tvUserDetailBalance"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="@color/accent_green"
                             android:textSize="14sp"
                             android:textStyle="bold"/>
@@ -270,18 +285,18 @@
                         android:layout_marginBottom="12dp"
                         android:visibility="gone"/>
 
-                    <!-- Разделитель -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/divider"
-                        android:layout_marginVertical="12dp"/>
+                        android:layout_marginBottom="14dp"/>
 
-                    <!-- Кнопки управления -->
+                    <!-- Кнопки управления: два ряда для лучшей адаптивности -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
 
                         <Button
                             android:id="@+id/btnUserBan"
@@ -300,7 +315,7 @@
                             android:layout_weight="1"
                             android:text="Сделать админом"
                             style="@style/OutlineButton"
-                            android:textSize="12sp"
+                            android:textSize="11sp"
                             android:layout_marginEnd="6dp"/>
 
                         <Button
@@ -315,22 +330,23 @@
 
                         <Button
                             android:id="@+id/btnUserDelete"
-                            android:layout_width="wrap_content"
+                            android:layout_width="44dp"
                             android:layout_height="wrap_content"
                             android:text="🗑"
                             style="@style/DangerButton"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:paddingHorizontal="0dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Подсказка когда пользователь не выбран -->
+            <!-- Подсказка, когда пользователь не выбран -->
             <TextView
                 android:id="@+id/tvNoUserSelected"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ℹ️ Управляйте пользователями: бан, назначение, управление счетами."
+                android:text="Выберите пользователя из списка выше для управления."
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:gravity="center"

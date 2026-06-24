@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="14dp"
     app:cardBackgroundColor="@color/dark_card"
     app:cardCornerRadius="16dp"
     app:cardElevation="6dp">
@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/accent_gold"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="6dp"/>
 
         <!-- Баланс -->
         <TextView
@@ -31,22 +31,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_primary"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Доп. информация о счёте -->
+        <!-- Доп. информация -->
         <TextView
             android:id="@+id/tvAccInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_secondary"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:lineSpacingMultiplier="1.4"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             android:visibility="gone"/>
 
-        <!-- Кнопка открытия счёта (когда счёт не открыт) -->
+        <!-- Кнопка открытия счёта -->
         <Button
             android:id="@+id/btnAccOpen"
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             style="@style/GoldButton"
             android:visibility="gone"/>
 
-        <!-- Кнопки операций (когда счёт открыт) -->
+        <!-- Кнопки операций -->
         <LinearLayout
             android:id="@+id/layoutAccButtons"
             android:layout_width="match_parent"
@@ -90,7 +90,6 @@
                 android:layout_weight="1"
                 android:text="История"
                 style="@style/OutlineButton"
-                android:layout_marginEnd="6dp"
                 android:textSize="12sp"/>
         </LinearLayout>
 

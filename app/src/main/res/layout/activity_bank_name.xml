@@ -2,21 +2,23 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="32dp"
-        android:minHeight="600dp">
+        android:paddingHorizontal="28dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="40dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🏦"
-            android:textSize="72sp"
+            android:textSize="64sp"
             android:gravity="center"
             android:layout_marginBottom="24dp"/>
 
@@ -25,15 +27,16 @@
             android:layout_height="wrap_content"
             android:text="Добро пожаловать!"
             android:textColor="@color/text_primary"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Введите название вашего банка"
             android:textColor="@color/text_secondary"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="40dp"
             android:gravity="center"/>
@@ -45,6 +48,7 @@
             android:hint="Название банка"
             style="@style/DarkEditText"
             android:inputType="textCapWords"
+            android:imeOptions="actionDone"
             android:layout_marginBottom="24dp"/>
 
         <Button

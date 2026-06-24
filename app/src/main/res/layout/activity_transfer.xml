@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient">
 
+    <!-- ═══ Toolbar ══════════════════════════════════════════════════════ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:gravity="center_vertical">
 
         <ImageButton
@@ -19,43 +24,49 @@
             android:src="@android:drawable/ic_media_previous"
             android:background="@drawable/btn_back"
             android:tint="@color/accent_gold"
-            android:contentDescription="Back"/>
+            android:contentDescription="Назад"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Перевод"
             android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="14dp"/>
     </LinearLayout>
 
+    <!-- ═══ Content ══════════════════════════════════════════════════════ -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
+            <!-- Подсказка -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ℹ️ Переводите средства другим пользователям. Укажите логин получателя, выберите счета и введите сумму."
+                android:text="Переводите средства другим пользователям. Укажите логин получателя, выберите счета и введите сумму."
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="16dp"
+                android:lineSpacingMultiplier="1.3"/>
 
+            <!-- Форма перевода -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/dark_card"
                 app:cardCornerRadius="16dp"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,6 +74,7 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
+                    <!-- Со счёта -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -78,8 +90,9 @@
                         android:background="@drawable/input_bg"
                         android:padding="12dp"
                         android:popupBackground="@color/dark_card"
-                        android:layout_marginBottom="16dp"/>
+                        android:layout_marginBottom="18dp"/>
 
+                    <!-- Получатель -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -95,8 +108,10 @@
                         android:hint="Логин пользователя"
                         style="@style/DarkEditText"
                         android:inputType="text"
-                        android:layout_marginBottom="16dp"/>
+                        android:imeOptions="actionNext"
+                        android:layout_marginBottom="18dp"/>
 
+                    <!-- На счёт -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -112,8 +127,9 @@
                         android:background="@drawable/input_bg"
                         android:padding="12dp"
                         android:popupBackground="@color/dark_card"
-                        android:layout_marginBottom="16dp"/>
+                        android:layout_marginBottom="18dp"/>
 
+                    <!-- Сумма -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,6 +145,7 @@
                         android:hint="0.00"
                         style="@style/DarkEditText"
                         android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
                         android:layout_marginBottom="24dp"/>
 
                     <Button

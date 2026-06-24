@@ -2,13 +2,16 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="32dp">
+        android:paddingHorizontal="28dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,8 +20,7 @@
             android:textColor="@color/accent_gold"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginBottom="6dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +28,7 @@
             android:text="Создайте свой аккаунт"
             android:textColor="@color/text_secondary"
             android:textSize="15sp"
-            android:layout_marginBottom="32dp"/>
+            android:layout_marginBottom="30dp"/>
 
         <EditText
             android:id="@+id/etRegFullName"
@@ -34,8 +36,9 @@
             android:layout_height="wrap_content"
             android:hint="ФИО"
             style="@style/DarkEditText"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="16dp"/>
+            android:inputType="textPersonName|textCapWords"
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="14dp"/>
 
         <EditText
             android:id="@+id/etRegUsername"
@@ -44,7 +47,8 @@
             android:hint="Логин (мин. 3 символа)"
             style="@style/DarkEditText"
             android:inputType="text"
-            android:layout_marginBottom="16dp"/>
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="14dp"/>
 
         <EditText
             android:id="@+id/etRegPassword"
@@ -53,7 +57,8 @@
             android:hint="Пароль (мин. 6 символов)"
             style="@style/DarkEditText"
             android:inputType="textPassword"
-            android:layout_marginBottom="16dp"/>
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="14dp"/>
 
         <EditText
             android:id="@+id/etRegEmail"
@@ -62,7 +67,8 @@
             android:hint="Email"
             style="@style/DarkEditText"
             android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp"/>
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="14dp"/>
 
         <EditText
             android:id="@+id/etRegPhone"
@@ -71,7 +77,8 @@
             android:hint="Телефон"
             style="@style/DarkEditText"
             android:inputType="phone"
-            android:layout_marginBottom="32dp"/>
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="30dp"/>
 
         <Button
             android:id="@+id/btnRegister"
@@ -85,10 +92,10 @@
             android:id="@+id/tvGoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="10dp"
             android:text="Уже есть аккаунт? Войти"
             android:textColor="@color/accent_gold"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
     </LinearLayout>
 </ScrollView>

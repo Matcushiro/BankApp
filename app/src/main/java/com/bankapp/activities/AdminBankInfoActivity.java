@@ -43,8 +43,21 @@ public class AdminBankInfoActivity extends AppCompatActivity {
 
         long realUsers = users.stream().filter(u -> !u.isSuperAdmin()).count();
         tvUsersCount.setText("Пользователей: " + realUsers);
-        tvBalance.setText(String.format("Всего в банке: %.2f ₽", dm.getAllUsers()));
-        tvAccCount.setText("Счетов всего: " + dm.getAllUsers());
+        long realUsersCount = 0;
+        int totalAccounts = 0;
+        double totalBalance = 0.0;
+
+        for (User u : users) {
+            if (!u.isSuperAdmin()) realUsersCount++;
+            if (u.getAccounts() != null) {
+                totalAccounts += u.getAccounts().size();
+                totalBalance += u.getTotalBalance();
+            }
+        }
+
+        tvUsersCount.setText("Пользователей: " + realUsersCount);
+        tvBalance.setText(String.format("Всего в банке: %.2f ₽", totalBalance));
+        tvAccCount.setText("Счетов всего: " + totalAccounts);
 
         StringBuilder details = new StringBuilder();
         for (User u : users) {

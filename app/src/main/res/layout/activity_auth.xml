@@ -2,34 +2,49 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="32dp"
-        android:minHeight="600dp">
+        android:paddingHorizontal="28dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="40dp">
+
+        <!-- Логотип / иконка -->
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:text="🏦"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:background="@drawable/circle_gold"
+            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:id="@+id/tvAuthBankName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/accent_gold"
-            android:textSize="32sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="8dp"/>
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginBottom="6dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Вход в аккаунт"
             android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            android:layout_marginBottom="40dp"/>
+            android:textSize="15sp"
+            android:layout_marginBottom="36dp"/>
 
+        <!-- Поле логина -->
         <EditText
             android:id="@+id/etAuthLogin"
             android:layout_width="match_parent"
@@ -37,8 +52,10 @@
             android:hint="Логин"
             style="@style/DarkEditText"
             android:inputType="text"
-            android:layout_marginBottom="16dp"/>
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="14dp"/>
 
+        <!-- Поле пароля -->
         <EditText
             android:id="@+id/etAuthPassword"
             android:layout_width="match_parent"
@@ -46,8 +63,10 @@
             android:hint="Пароль"
             style="@style/DarkEditText"
             android:inputType="textPassword"
+            android:imeOptions="actionDone"
             android:layout_marginBottom="28dp"/>
 
+        <!-- Кнопка входа -->
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
@@ -56,6 +75,7 @@
             style="@style/GoldButton"
             android:layout_marginBottom="20dp"/>
 
+        <!-- Ссылка на регистрацию -->
         <TextView
             android:id="@+id/tvGoRegister"
             android:layout_width="wrap_content"
@@ -63,7 +83,7 @@
             android:text="Нет аккаунта? Зарегистрироваться"
             android:textColor="@color/accent_gold"
             android:textSize="15sp"
-            android:padding="8dp"/>
+            android:padding="10dp"/>
 
     </LinearLayout>
 </ScrollView>

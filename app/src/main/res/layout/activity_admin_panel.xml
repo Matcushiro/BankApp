@@ -6,11 +6,15 @@
     android:orientation="vertical"
     android:background="@drawable/bg_gradient">
 
+    <!-- ═══ Toolbar ══════════════════════════════════════════════════════ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:gravity="center_vertical">
 
         <ImageButton
@@ -20,18 +24,22 @@
             android:src="@android:drawable/ic_media_previous"
             android:background="@drawable/btn_back"
             android:tint="@color/accent_gold"
-            android:contentDescription="Back"/>
+            android:contentDescription="Назад"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Панель администратора"
             android:textColor="@color/accent_gold"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 
+    <!-- Подзаголовок -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,29 +47,33 @@
         android:textColor="@color/text_secondary"
         android:textSize="13sp"
         android:paddingHorizontal="20dp"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="12dp"/>
 
+    <!-- ═══ Menu Cards ════════════════════════════════════════════════════ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
+        <!-- Пользователи -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAdminUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             app:cardBackgroundColor="@color/dark_card"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:cardElevation="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
@@ -69,14 +81,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginStart="16dp">
+                    android:layout_marginStart="14dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Пользователи"
                         android:textColor="@color/text_primary"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -84,7 +96,8 @@
                         android:layout_height="wrap_content"
                         android:text="Управление аккаунтами"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp"/>
+                        android:textSize="12sp"
+                        android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <TextView
@@ -92,23 +105,27 @@
                     android:layout_height="wrap_content"
                     android:text="›"
                     android:textColor="@color/accent_gold"
-                    android:textSize="24sp"/>
+                    android:textSize="26sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Информация о банке -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAdminBankInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/dark_card"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
@@ -116,14 +133,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginStart="16dp">
+                    android:layout_marginStart="14dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Информация о банке"
                         android:textColor="@color/text_primary"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -131,7 +148,8 @@
                         android:layout_height="wrap_content"
                         android:text="Статистика и данные"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp"/>
+                        android:textSize="12sp"
+                        android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <TextView
@@ -139,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:text="›"
                     android:textColor="@color/accent_gold"
-                    android:textSize="24sp"/>
+                    android:textSize="26sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
