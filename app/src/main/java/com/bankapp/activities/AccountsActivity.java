@@ -67,8 +67,8 @@ public class AccountsActivity extends AppCompatActivity {
         LinearLayout container = findViewById(R.id.accountsContainer);
         container.removeAllViews();
 
-        setupAccountCard(container, Account.TYPE_DEBIT,   "💳 Дебетовый счёт");
-        setupAccountCard(container, Account.TYPE_CREDIT,  "💰 Кредитный счёт");
+        setupAccountCard(container, Account.TYPE_DEBIT, "💳 Дебетовый счёт");
+        setupAccountCard(container, Account.TYPE_CREDIT, "💰 Кредитный счёт");
         setupAccountCard(container, Account.TYPE_SAVINGS, "🏦 Накопительный счёт");
     }
 
@@ -76,14 +76,14 @@ public class AccountsActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View cardView = inflater.inflate(R.layout.item_account, container, false);
 
-        TextView  tvTitle        = cardView.findViewById(R.id.tvAccTitle);
-        TextView  tvBalance      = cardView.findViewById(R.id.tvAccBalance);
-        TextView  tvInfo         = cardView.findViewById(R.id.tvAccInfo);
-        Button    btnOpen        = cardView.findViewById(R.id.btnAccOpen);
+        TextView tvTitle = cardView.findViewById(R.id.tvAccTitle);
+        TextView tvBalance = cardView.findViewById(R.id.tvAccBalance);
+        TextView tvInfo = cardView.findViewById(R.id.tvAccInfo);
+        Button btnOpen = cardView.findViewById(R.id.btnAccOpen);
         LinearLayout layoutBtns = cardView.findViewById(R.id.layoutAccButtons);
-        Button    btnDeposit     = cardView.findViewById(R.id.btnAccDeposit);
-        Button    btnWithdraw    = cardView.findViewById(R.id.btnAccWithdraw);
-        Button    btnHistory     = cardView.findViewById(R.id.btnAccHistory);
+        Button btnDeposit = cardView.findViewById(R.id.btnAccDeposit);
+        Button btnWithdraw = cardView.findViewById(R.id.btnAccWithdraw);
+        Button btnHistory = cardView.findViewById(R.id.btnAccHistory);
 
         tvTitle.setText(title);
 
@@ -105,12 +105,10 @@ public class AccountsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Ошибка: счёт уже существует", Toast.LENGTH_SHORT).show();
                 }
             });
-
         } else {
             // Счёт открыт — показываем баланс и кнопки операций
             btnOpen.setVisibility(View.GONE);
             layoutBtns.setVisibility(View.VISIBLE);
-
             tvBalance.setText(String.format("%.2f ₽", account.getBalance()));
 
             // Формируем блок дополнительной информации
@@ -119,7 +117,6 @@ public class AccountsActivity extends AppCompatActivity {
                 case Account.TYPE_DEBIT:
                     info.append("Открыт: ").append(DateUtils.formatDate(account.getCreatedDate()));
                     break;
-
                 case Account.TYPE_CREDIT:
                     info.append("Кредитный лимит: ")
                             .append(String.format("%.0f ₽", account.getCreditLimit()))
@@ -128,7 +125,6 @@ public class AccountsActivity extends AppCompatActivity {
                             .append("\nПроцентная ставка: ")
                             .append(String.format("%.1f%%", account.getInterestRate()));
                     break;
-
                 case Account.TYPE_SAVINGS:
                     info.append("Процентная ставка: ")
                             .append(String.format("%.1f%% в год", account.getInterestRate()))
@@ -136,6 +132,7 @@ public class AccountsActivity extends AppCompatActivity {
                             .append(DateUtils.formatDate(account.getCreatedDate()));
                     break;
             }
+
             if (info.length() > 0) {
                 tvInfo.setText(info.toString());
                 tvInfo.setVisibility(View.VISIBLE);
@@ -169,6 +166,7 @@ public class AccountsActivity extends AppCompatActivity {
                 android.text.InputType.TYPE_CLASS_NUMBER |
                         android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
         );
+
         // ИСПРАВЛЕНИЕ ЦВЕТА: белый текст и подсказка на тёмном фоне
         etAmount.setTextColor(Color.WHITE);
         etAmount.setHintTextColor(Color.parseColor("#B0BEC5"));
@@ -193,6 +191,7 @@ public class AccountsActivity extends AppCompatActivity {
                         Toast.makeText(this, "Введите сумму", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     double amount;
                     try {
                         amount = Double.parseDouble(input);
@@ -200,38 +199,49 @@ public class AccountsActivity extends AppCompatActivity {
                         Toast.makeText(this, "Неверный формат суммы", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     if (amount <= 0) {
                         Toast.makeText(this, "Сумма должна быть больше нуля", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    boolean success;
+                    // ИСПРАВЛЕНИЕ: Используем OperationResult вместо boolean
+                    BankManager.OperationResult result;
                     if (isDeposit) {
-                        success = bankManager.deposit(currentUser, account, amount);
+                        result = bankManager.deposit(currentUser, account.getType(), amount);
                     } else {
-                        success = bankManager.withdraw(currentUser, account, amount);
+                        result = bankManager.withdraw(currentUser, account.getType(), amount);
                     }
 
-                    if (success) {
-                        Toast.makeText(this,
-                                isDeposit ? "Пополнено на " + amount + " ₽"
-                                        : "Снято " + amount + " ₽",
-                                Toast.LENGTH_SHORT).show();
-                        refresh();
-                    } else {
-                        Toast.makeText(this,
-                                isDeposit ? "Ошибка пополнения" : "Недостаточно средств",
-                                Toast.LENGTH_SHORT).show();
+                    // ИСПРАВЛЕНИЕ: Обрабатываем все возможные результаты
+                    switch (result) {
+                        case SUCCESS:
+                            Toast.makeText(this,
+                                    isDeposit ? "✅ Счёт пополнен!" : "✅ Средства сняты!",
+                                    Toast.LENGTH_SHORT).show();
+                            refresh();
+                            break;
+                        case INSUFFICIENT_FUNDS:
+                            Toast.makeText(this, "❌ Недостаточно средств", Toast.LENGTH_SHORT).show();
+                            break;
+                        case INVALID_AMOUNT:
+                            Toast.makeText(this, "❌ Некорректная сумма", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ACCOUNT_NOT_FOUND:
+                            Toast.makeText(this, "❌ Счёт не найден", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ACCOUNT_INACTIVE:
+                            Toast.makeText(this, "❌ Счёт неактивен", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(this, "❌ Ошибка операции", Toast.LENGTH_SHORT).show();
+                            break;
                     }
                 })
                 .setNegativeButton("Отмена", null)
                 .show();
     }
 
-    /**
-     * ИЗМЕНЕНИЕ: Диалог истории операций с явным светлым текстом на тёмном фоне.
-     * Каждая операция отображается с чётким контрастом.
-     */
     private void showHistoryDialog(Account account) {
         List<Transaction> transactions = account.getTransactions();
 
@@ -255,6 +265,7 @@ public class AccountsActivity extends AppCompatActivity {
             // Показываем последние 20 операций (от новых к старым)
             List<Transaction> txList = transactions;
             int start = Math.max(0, txList.size() - 20);
+
             for (int i = txList.size() - 1; i >= start; i--) {
                 Transaction tx = txList.get(i);
 
@@ -267,9 +278,8 @@ public class AccountsActivity extends AppCompatActivity {
                 if (i < txList.size() - 1) {
                     View divider = new View(this);
                     divider.setBackgroundColor(Color.parseColor("#26323800"));
-                    LinearLayout.LayoutParams dividerParams =
-                            new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                    LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, 1);
                     divider.setLayoutParams(dividerParams);
                     layout.addView(divider);
                 }
@@ -338,16 +348,20 @@ public class AccountsActivity extends AppCompatActivity {
     private String getTransactionTypeLabel(String type) {
         if (type == null) return "Операция";
         switch (type) {
-            case Transaction.TYPE_DEPOSIT:    return "📥 Пополнение";
-            case Transaction.TYPE_WITHDRAW: return "📤 Снятие";
-            case Transaction.TYPE_TRANSFER:   return "↔️ Перевод";
-            case Transaction.TYPE_INTEREST:   return "📈 Проценты";
-            default:                          return type;
+            case Transaction.TYPE_DEPOSIT:
+                return "📥 Пополнение";
+            case Transaction.TYPE_WITHDRAW:
+                return "📤 Снятие";
+            case Transaction.TYPE_TRANSFER:
+                return "↔️ Перевод";
+            case Transaction.TYPE_INTEREST:
+                return "📈 Проценты";
+            default:
+                return type;
         }
     }
 
     private boolean isPositiveTransaction(String type) {
-        return Transaction.TYPE_DEPOSIT.equals(type)
-                || Transaction.TYPE_INTEREST.equals(type);
+        return Transaction.TYPE_DEPOSIT.equals(type) || Transaction.TYPE_INTEREST.equals(type);
     }
 }
