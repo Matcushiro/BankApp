@@ -278,7 +278,7 @@
                         android:id="@+id/tvUserDetailBanned"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="🚫 ЗАБАНЕН"
+                        android:text="ЗАБАНЕН"
                         android:textColor="@color/accent_red"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -295,47 +295,42 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
-
-                        <Button
-                            android:id="@+id/btnUserBan"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Забанить"
-                            style="@style/DangerButton"
-                            android:textSize="12sp"
-                            android:layout_marginEnd="6dp"/>
+                        android:orientation="vertical">
 
                         <Button
                             android:id="@+id/btnUserAdmin"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Сделать админом"
                             style="@style/OutlineButton"
-                            android:textSize="11sp"
-                            android:layout_marginEnd="6dp"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Сделать админом"
+                            android:textSize="12sp" />
+
+                        <Button
+                            android:id="@+id/btnUserBan"
+                            style="@style/GoldButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Забанить"
+                            android:textSize="12sp" />
 
                         <Button
                             android:id="@+id/btnUserAccounts"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Счета"
                             style="@style/GoldButton"
-                            android:textSize="12sp"
-                            android:layout_marginEnd="6dp"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Счета"
+                            android:textSize="12sp" />
 
                         <Button
                             android:id="@+id/btnUserDelete"
-                            android:layout_width="44dp"
+                            style="@style/GoldButton"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="🗑"
-                            style="@style/DangerButton"
-                            android:textSize="16sp"
-                            android:paddingHorizontal="0dp"/>
+                            android:text="Удалить"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                 </LinearLayout>
